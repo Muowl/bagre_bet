@@ -28,3 +28,11 @@ Sistema de apostas desenvolvido com Flask
    ```
    http://localhost:5000/cadastro
    ```
+
+    Para ver a base de dados:
+   ```
+   http://localhost:5000/dados
+   ```
+
+## Observações
+- No .gitignore a pasta criada contendo a base de dados está sendo excluída do GitHub, sendo assim os dados estão sendo salvos localmente
