@@ -60,6 +60,12 @@ def login():
 def dashboard():
     return "Bem-vindo ao dashboard!"
 
+# Nova rota para visualização dos dados dos usuários
+@app.route('/dados')
+def dados():
+    usuarios = Usuario.query.all()
+    return render_template('dados.html', usuarios=usuarios)
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()  # Cria as tabelas definidas
