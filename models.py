@@ -9,6 +9,7 @@ class Usuario(db.Model):
     nome = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     senha = db.Column(db.String(200), nullable=False)
+    saldo = db.Column(db.Float, default=0.0)
     nivel_acesso = db.Column(db.Integer, default=1)  # 0 = admin, 1 = usuário normal
 
     def set_senha(self, password):

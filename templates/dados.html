@@ -71,6 +71,7 @@
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Email</th>
+                    <th>Saldo</th>
                     <th>Nível de Acesso</th>
                 </tr>
             </thead>
@@ -80,6 +81,7 @@
                     <td>{{ usuario.id_user }}</td>
                     <td>{{ usuario.nome }}</td>
                     <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.saldo }}</td>
                     <td>{{ 'Administrador' if usuario.nivel_acesso == 0 else 'Usuário' }}</td>
                 </tr>
                 {% endfor %}
