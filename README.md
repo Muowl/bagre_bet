@@ -36,3 +36,4 @@ Sistema de apostas desenvolvido com Flask
 
 ## Observações
 - No .gitignore a pasta criada contendo a base de dados está sendo excluída do GitHub, sendo assim os dados estão sendo salvos localmente
+- Adicionar customização no app 
