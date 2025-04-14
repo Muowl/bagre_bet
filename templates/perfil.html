@@ -1,29 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
-    <!-- Link para o CSS do Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Bagre Bet | Perfil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-light">
-    <div class="container mt-5">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white text-center">
-                <h1>Bem-vindo ao seu perfil!</h1>
+<body>
+    <div class="container">
+        <div class="casino-chip" style="top: 15px; right: 15px;">VIP</div>
+        
+        <h1>Seu Perfil <span style="color: var(--accent-green);">♠</span></h1>
+        
+        <div class="profile-section">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <div class="avatar-placeholder">
+                        <span>{{ usuario.nome[:1] }}</span>
+                    </div>
+                </div>
+                <div class="profile-info">
+                    <h2>{{ usuario.nome }}</h2>
+                    <p>{{ usuario.email }}</p>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <span class="stat-value">0</span>
+                            <span class="stat-label">Apostas</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">0 <span style="color: var(--accent-green);">€</span></span>
+                            <span class="stat-label">Saldo</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <p class="text-center">Este é o template do perfil.</p>
-            </div>
-            <div class="card-footer text-center">
-                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Voltar ao Dashboard</a>
+            
+            <div class="profile-actions">
+                <a href="#" class="btn">Fazer uma Aposta</a>
+                <a href="#" class="btn btn-secondary">Adicionar Fundos</a>
+                <a href="{{ url_for('dashboard') }}" class="voltar">Voltar ao Dashboard</a>
             </div>
         </div>
     </div>
-    <!-- Script do Bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
