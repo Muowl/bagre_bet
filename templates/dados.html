@@ -1,56 +1,44 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bagre Bet | Usuários</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <h1>Usuários Cadastrados <span style="color: var(--accent-pink);">♦</span></h1>
-        
-        {% if usuarios %}
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Saldo</th>
-                        <th>Nível</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for usuario in usuarios %}
-                    <tr>
-                        <td>#{{ usuario.id_user }}</td>
-                        <td>{{ usuario.nome }}</td>
-                        <td>{{ usuario.email }}</td>
-                        <td><span style="color: var(--accent-green);">{{ usuario.saldo }} €</span></td>
-                        <td>
-                            {% if usuario.nivel_acesso == 0 %}
-                            <span class="badge admin">Admin</span>
-                            {% else %}
-                            <span class="badge user">Usuário</span>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% else %}
-        <div class="sem-usuarios">
-            <p>Nenhum usuário cadastrado até o momento.</p>
-        </div>
-        {% endif %}
-        
-        <div class="action-buttons">
-            <a href="{{ url_for('login') }}" class="voltar">Voltar Login</a>
-        </div>
-    </div>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Bagre Bet | Usuários{% endblock %}
+
+{% block page_title %}Usuários Cadastrados{% endblock %}
+
+{% block content %}
+{% if usuarios %}
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Saldo</th>
+                <th>Nível</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>#{{ usuario.id_user }}</td>
+                <td>{{ usuario.nome }}</td>
+                <td>{{ usuario.email }}</td>
+                <td><span style="color: var(--accent-green);">{{ usuario.saldo }} €</span></td>
+                <td>
+                    {% if usuario.nivel_acesso == 0 %}
+                    <span class="badge admin">Admin</span>
+                    {% else %}
+                    <span class="badge user">Usuário</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="sem-usuarios">
+    <p>Nenhum usuário cadastrado até o momento.</p>
+</div>
+{% endif %}
+{% endblock %}

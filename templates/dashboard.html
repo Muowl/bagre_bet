@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Bagre Bet | Dashboard{% endblock %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Cards de Estatísticas -->
+    <div class="stats-cards">
+        <div class="stat-card">
+            <div class="stat-card-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div class="stat-card-content">
+                <h3>Apostas Ganhas</h3>
+                <p class="stat-value">0</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-icon">
+                <i class="fas fa-coins"></i>
+            </div>
+            <div class="stat-card-content">
+                <h3>Saldo Atual</h3>
+                <p class="stat-value">{{ current_user.saldo }} €</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-icon">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="stat-card-content">
+                <h3>Apostas Ativas</h3>
+                <p class="stat-value">0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jogos em Destaque -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h3>Jogos em Destaque</h3>
+            <a href="#" class="view-all">Ver Todos</a>
+        </div>
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-image" style="background-color: rgba(189, 147, 249, 0.1);">
+                    <i class="fas fa-dice" style="font-size: 2rem; color: var(--accent-purple);"></i>
+                </div>
+                <div class="game-info">
+                    <h4>Dados VIP</h4>
+                    <p>Jogue os dados e ganhe até 50x!</p>
+                </div>
+                <a href="#" class="btn btn-sm">Jogar Agora</a>
+            </div>
+            <div class="game-card">
+                <div class="game-image" style="background-color: rgba(255, 121, 198, 0.1);">
+                    <i class="fas fa-cards" style="font-size: 2rem; color: var(--accent-pink);"></i>
+                </div>
+                <div class="game-info">
+                    <h4>Blackjack</h4>
+                    <p>O clássico 21 com regras exclusivas!</p>
+                </div>
+                <a href="#" class="btn btn-sm">Jogar Agora</a>
+            </div>
+            <div class="game-card">
+                <div class="game-image" style="background-color: rgba(80, 250, 123, 0.1);">
+                    <i class="fas fa-slot-machine" style="font-size: 2rem; color: var(--accent-green);"></i>
+                </div>
+                <div class="game-info">
+                    <h4>Slots Premium</h4>
+                    <p>Ganhe rodadas grátis e bônus incríveis!</p>
+                </div>
+                <a href="#" class="btn btn-sm">Jogar Agora</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Últimas Apostas -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h3>Suas Últimas Apostas</h3>
+        </div>
+        <div class="recent-bets-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Jogo</th>
+                        <th>Data</th>
+                        <th>Aposta</th>
+                        <th>Resultado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sem histórico de apostas</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Promoção especial -->
+    <div class="special-promo">
+        <div class="promo-content">
+            <h3>Bônus de Primeira Aposta</h3>
+            <p>Ganhe 200% do valor da sua primeira aposta! Limite de €100.</p>
+            <a href="#" class="btn">Resgatar Agora</a>
+        </div>
+        <div class="promo-decoration">
+            <div class="casino-chip" style="top: 20px; right: 30px;">50</div>
+            <div class="casino-chip" style="bottom: 30px; right: 80px;">100</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

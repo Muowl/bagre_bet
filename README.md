@@ -34,6 +34,10 @@ Sistema de apostas desenvolvido com Flask
    http://localhost:5000/dados
    ```
 
+## Conta admin (durante desenvolvimento)
+admin@bagre.bet
+ademir
+
 ## Observações
 - No .gitignore a pasta criada contendo a base de dados está sendo excluída do GitHub, sendo assim os dados estão sendo salvos localmente
 - Adicionar customização no app 
