@@ -1,44 +1,48 @@
-{% extends 'base.html' %}
+{% extends 'admin_base.html' %}
 
-{% block title %}Bagre Bet | Usuários{% endblock %}
+{% block title %}Bagre Bet | Usuários Cadastrados{% endblock %}
 
 {% block page_title %}Usuários Cadastrados{% endblock %}
 
 {% block content %}
-{% if usuarios %}
-<div class="table-container">
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Saldo</th>
-                <th>Nível</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for usuario in usuarios %}
-            <tr>
-                <td>#{{ usuario.id_user }}</td>
-                <td>{{ usuario.nome }}</td>
-                <td>{{ usuario.email }}</td>
-                <td><span style="color: var(--accent-green);">{{ usuario.saldo }} B</span></td>
-                <td>
-                    {% if usuario.nivel_acesso == 0 %}
-                    <span class="badge admin">Admin</span>
-                    {% else %}
-                    <span class="badge user">Usuário</span>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="admin-section">
+    <h2 class="admin-section-header">Lista de Usuários</h2>
+    
+    {% if usuarios %}
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Saldo</th>
+                    <th>Nível</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>#{{ usuario.id_user }}</td>
+                    <td>{{ usuario.nome }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td><span style="color: var(--accent-green);">{{ usuario.saldo }} B</span></td>
+                    <td>
+                        {% if usuario.nivel_acesso == 0 %}
+                        <span class="badge admin">Admin</span>
+                        {% else %}
+                        <span class="badge user">Usuário</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="sem-usuarios">
+        <p>Nenhum usuário cadastrado até o momento.</p>
+    </div>
+    {% endif %}
 </div>
-{% else %}
-<div class="sem-usuarios">
-    <p>Nenhum usuário cadastrado até o momento.</p>
-</div>
-{% endif %}
 {% endblock %}

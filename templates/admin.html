@@ -1,0 +1,29 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Bagre Bet | Painel Administrativo{% endblock %}
+
+{% block page_title %}Painel Administrativo{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard">
+    <div class="admin-header">
+        <h2>Bem-vindo ao Painel Administrativo</h2>
+        <p>Escolha uma das opções abaixo para gerenciar o sistema</p>
+    </div>
+    
+    <div class="admin-options">
+        <div class="admin-card">
+            <div class="admin-card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="admin-card-content">
+                <h3>Gerenciar Usuários</h3>
+                <p>Visualize e gerencie todos os usuários cadastrados no sistema</p>
+                <a href="{{ url_for('dados') }}" class="btn">Acessar</a>
+            </div>
+        </div>
+        
+        <!-- Espaço para adicionar mais opções no futuro -->
+    </div>
+</div>
+{% endblock %}

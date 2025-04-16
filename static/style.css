@@ -952,3 +952,144 @@ textarea:focus {
         display: none;
     }
 }
+
+/* Estilos para o painel administrativo */
+.admin-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.admin-header {
+    background: linear-gradient(135deg, rgba(189, 147, 249, 0.1), rgba(255, 121, 198, 0.1));
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: var(--shadow-dark);
+    border: 1px solid rgba(189, 147, 249, 0.1);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.admin-header h2 {
+    color: var(--accent-purple);
+    margin-bottom: 10px;
+    font-size: 26px;
+}
+
+.admin-header p {
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.admin-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.admin-card {
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-dark);
+    border: 1px solid rgba(189, 147, 249, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-neon);
+}
+
+.admin-card-icon {
+    height: 100px;
+    background: linear-gradient(135deg, rgba(189, 147, 249, 0.1), rgba(255, 121, 198, 0.1));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-card-icon i {
+    font-size: 40px;
+    color: var(--accent-purple);
+}
+
+.admin-card-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-card-content h3 {
+    color: var(--accent-purple);
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+.admin-card-content p {
+    color: var(--text-secondary);
+    flex: 1;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.admin-card-content .btn {
+    margin: 0;
+}
+
+/* Estilos específicos para o template admin */
+.admin-sidebar {
+    background-color: var(--bg-secondary);
+    border-right: 1px solid rgba(255, 121, 198, 0.1);
+}
+
+.admin-sidebar .sidebar-header h2 {
+    color: var(--accent-pink);
+}
+
+.admin-sidebar .casino-chip {
+    background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+}
+
+.admin-topbar {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid rgba(255, 121, 198, 0.1);
+}
+
+.admin-badge {
+    background-color: rgba(255, 121, 198, 0.1);
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 121, 198, 0.2);
+    color: var(--accent-pink);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.admin-avatar {
+    background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+}
+
+/* Estilos alternativos para cards no admin */
+.admin-section {
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-dark);
+    border: 1px solid rgba(255, 121, 198, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.admin-section-header {
+    color: var(--accent-pink);
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 121, 198, 0.1);
+    padding-bottom: 10px;
+}
