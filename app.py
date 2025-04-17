@@ -68,6 +68,10 @@ def cadastro():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if 'usuario_id' in session:
+        # Se já estiver logado, verifica se é admin para redirecionar para a página correta
+        usuario = Usuario.query.get(session['usuario_id'])
+        if usuario.nivel_acesso == 0:
+            return redirect(url_for('admin_panel'))
         return redirect(url_for('dashboard'))
         
     if request.method == 'POST':
@@ -82,7 +86,12 @@ def login():
             session['nivel_acesso'] = usuario.nivel_acesso
             
             flash("Login efetuado com sucesso!")
-            return redirect(url_for('dashboard'))
+            
+            # Redireciona com base no nível de acesso
+            if usuario.nivel_acesso == 0:
+                return redirect(url_for('admin_panel'))
+            else:
+                return redirect(url_for('dashboard'))
         else:
             flash("Credenciais inválidas. Tente novamente.")
     
@@ -137,6 +146,9 @@ def admin_panel():
 @app.route('/')
 def index():
     if 'usuario_id' in session:
+        usuario = Usuario.query.get(session['usuario_id'])
+        if usuario.nivel_acesso == 0:
+            return redirect(url_for('admin_panel'))
         return redirect(url_for('dashboard'))
     return redirect(url_for('login'))
 
