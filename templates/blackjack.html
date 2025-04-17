@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Bagre Bet | Blackjack{% endblock %}
+
+{% block page_title %}Blackjack{% endblock %}
+
+{% block content %}
+<div class="blackjack-container">
+    <h3>Bem-vindo ao Blackjack!</h3>
+    <p>Saldo: {{ current_user.saldo }} <i class="fas fa-coins" style="color: var(--accent-yellow);"></i></p>
+
+    {% if message %}
+        <div class="alert">{{ message }}</div>
+    {% endif %}
+
+    <div class="game-area">
+        <h4>Sua Mão:</h4>
+        <p>
+            {% for card in player_hand %}
+                {{ card.rank }}{{ card.suit }}
+            {% endfor %}
+        </p>
+        <p>Pontuação: {{ player_score }}</p>
+
+        <h4>Mão do Dealer:</h4>
+        <p>
+            {% for card in dealer_hand %}
+                {{ card.rank }}{{ card.suit }}
+            {% endfor %}
+        </p>
+        <p>Pontuação: {{ dealer_score }}</p>
+    </div>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="bet">Aposta (BagreCoins):</label>
+            <input type="number" id="bet" name="bet" step="0.01" min="0" required>
+        </div>
+        <button type="submit" name="action" value="start" class="btn">Nova Mão</button>
+        <button type="submit" name="action" value="play" class="btn btn-secondary">Finalizar Rodada</button>
+    </form>
+
+    <a href="{{ url_for('cassino') }}" class="btn btn-secondary">Voltar ao Cassino</a>
+</div>
+{% endblock %}

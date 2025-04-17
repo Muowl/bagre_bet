@@ -142,6 +142,52 @@ def cassino():
                           active_page='cassino',
                           current_user=usuario) 
 
+# Rota para o blackjack
+from blackjack import Blackjack
+
+blackjack_game = Blackjack()
+
+@app.route('/blackjack', methods=['GET', 'POST'])
+@login_required
+def blackjack():
+    usuario = Usuario.query.get(session['usuario_id'])
+    message = None
+
+    if request.method == 'POST':
+        action = request.form.get('action')
+        bet = float(request.form.get('bet', 0))
+
+        if action == 'start':
+            if bet > usuario.saldo:
+                message = "Saldo insuficiente para apostar!"
+            elif bet <= 0:
+                message = "Aposta inválida!"
+            else:
+                blackjack_game.start_new_round(bet)
+                usuario.saldo -= bet
+                db.session.commit()
+        elif action == 'play':
+            winner = blackjack_game.determine_winner()
+            if winner == 'player':
+                usuario.saldo += blackjack_game.player_bet * 2
+                message = "Você ganhou!"
+            elif winner == 'dealer':
+                message = "Você perdeu!"
+            else:
+                usuario.saldo += blackjack_game.player_bet
+                message = "Empate!"
+            db.session.commit()
+
+    return render_template(
+        'blackjack.html',
+        current_user=usuario,
+        player_hand=blackjack_game.player_hand,
+        dealer_hand=blackjack_game.dealer_hand,
+        player_score=blackjack_game.calculate_score(blackjack_game.player_hand),
+        dealer_score=blackjack_game.calculate_score(blackjack_game.dealer_hand),
+        message=message
+    )
+
 # Rota para o painel de administração
 @app.route('/admin')
 @admin_required
