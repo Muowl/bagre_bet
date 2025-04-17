@@ -30,8 +30,8 @@
                             <span>Usuários</span>
                         </a>
                     </li>
-                    <li class="{% if active_page == 'perfil' %}active{% endif %}">
-                        <a href="{{ url_for('perfil') }}">
+                    <li class="{% if active_page == 'admin_perfil' %}active{% endif %}">
+                        <a href="{{ url_for('admin_perfil') }}">
                             <i class="fas fa-user"></i>
                             <span>Perfil</span>
                         </a>
@@ -68,7 +68,7 @@
                             <span>{{ current_user.nome[:1] }}</span>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="{{ url_for('perfil') }}">
+                            <a href="{{ url_for('admin_perfil') }}">
                                 <i class="fas fa-user"></i> Perfil
                             </a>
                             <a href="{{ url_for('logout') }}">

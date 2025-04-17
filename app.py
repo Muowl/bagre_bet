@@ -142,6 +142,15 @@ def admin_panel():
                           active_page='admin',
                           current_user=usuario)
 
+# Rota para o perfil do administrador (dentro do painel admin)
+@app.route('/admin/perfil')
+@admin_required
+def admin_perfil():
+    usuario = Usuario.query.get(session['usuario_id'])
+    return render_template('admin_perfil.html', 
+                          active_page='admin_perfil',
+                          current_user=usuario)
+
 # Página inicial - redireciona para login se não estiver logado
 @app.route('/')
 def index():
