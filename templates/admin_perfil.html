@@ -1,0 +1,40 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Bagre Bet | Perfil de Administrador{% endblock %}
+
+{% block page_title %}Perfil de Administrador{% endblock %}
+
+{% block content %}
+<div class="admin-section">
+    <h2 class="admin-section-header">Informações do Administrador</h2>
+    
+    <div class="profile-section">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <div class="avatar-placeholder admin-avatar-large">
+                    <span>{{ current_user.nome[:1] }}</span>
+                </div>
+            </div>
+            <div class="profile-info">
+                <h2>{{ current_user.nome }}</h2>
+                <p>{{ current_user.email }}</p>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <span class="stat-value">Administrador</span>
+                        <span class="stat-label">Nível de Acesso</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">{{ current_user.saldo }} <span style="color: var(--accent-green);">B</span></span>
+                        <span class="stat-label">Saldo Disponível</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-actions">
+            <a href="#" class="btn btn-secondary">Alterar Senha</a>
+            <a href="#" class="btn">Gerenciar Conta</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
