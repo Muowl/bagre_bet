@@ -1,0 +1,826 @@
+{% extends 'base.html' %}
+
+{% block title %}Bagre Bet | Apostas{% endblock %}
+
+{% block page_title %}Apostas Em Destaque{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Estilos específicos para apostas */
+    .apostas-container {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+    
+    .odds-card {
+        background: var(--bg-secondary);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        border: 1px solid rgba(189, 147, 249, 0.1);
+        display: flex;
+        margin-bottom: 15px;
+    }
+    
+    .odds-image {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+    }
+    
+    .odds-content {
+        padding: 15px;
+        flex: 1;
+    }
+    
+    .odds-title {
+        color: var(--accent-purple);
+        margin: 0 0 5px;
+        font-size: 20px;
+    }
+    
+    .sports-category {
+        margin-top: 30px;
+    }
+    
+    .category-title {
+        color: var(--text-primary);
+        margin-bottom: 15px;
+        font-size: 18px;
+        font-weight: 500;
+    }
+    
+    .sport-items {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+    }
+    
+    .sport-item {
+        display: flex;
+        align-items: center;
+        background: rgba(40, 42, 54, 0.6);
+        border-radius: var(--border-radius);
+        padding: 15px;
+        border: 1px solid rgba(189, 147, 249, 0.1);
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .sport-item:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-neon);
+    }
+    
+    .sport-icon {
+        width: 50px;
+        height: 50px;
+        background-color: rgba(189, 147, 249, 0.1);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+    }
+    
+    .sport-info {
+        flex: 1;
+    }
+    
+    .sport-info h4 {
+        margin: 0 0 5px;
+        color: var(--text-primary);
+    }
+    
+    .sport-info p {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 12px;
+    }
+    
+    .sport-item .fa-chevron-right {
+        color: var(--text-secondary);
+    }
+    
+    .bet-slip {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 350px;
+        background: var(--bg-secondary);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-dark);
+        border: 1px solid rgba(189, 147, 249, 0.2);
+        z-index: 1000;
+        overflow: hidden;
+    }
+    
+    .bet-slip-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: rgba(189, 147, 249, 0.1);
+        border-bottom: 1px solid rgba(189, 147, 249, 0.2);
+    }
+    
+    .bet-slip-title {
+        margin: 0;
+        font-size: 16px;
+        color: var(--accent-purple);
+    }
+    
+    .bet-slip-body {
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 0 15px;
+    }
+    
+    .bet-item {
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(98, 114, 164, 0.1);
+        display: flex;
+        align-items: center;
+    }
+    
+    .bet-item-remove {
+        background: none;
+        border: none;
+        color: var(--accent-red);
+        cursor: pointer;
+        padding: 5px;
+        margin-right: 5px;
+    }
+    
+    .bet-item-info {
+        flex: 1;
+    }
+    
+    .bet-item-title {
+        margin: 0;
+        font-size: 14px;
+        color: var(--text-primary);
+    }
+    
+    .bet-item-selection {
+        margin: 3px 0 0;
+        font-size: 12px;
+        color: var(--text-secondary);
+    }
+    
+    .bet-item-odd {
+        background: rgba(189, 147, 249, 0.1);
+        color: var(--accent-purple);
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    
+    .bet-slip-footer {
+        padding: 15px;
+        border-top: 1px solid rgba(98, 114, 164, 0.1);
+        background: rgba(40, 42, 54, 0.6);
+    }
+    
+    .total-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    
+    .taxa-vitoria {
+        color: var(--accent-green);
+        font-weight: 500;
+    }
+    
+    .odds-container {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    
+    .team-odds {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .odd-box {
+        background-color: rgba(189, 147, 249, 0.1);
+        border: 1px solid rgba(189, 147, 249, 0.2);
+        border-radius: var(--border-radius);
+        padding: 8px 12px;
+        text-align: center;
+        font-size: 14px;
+        flex: 1;
+        color: var(--accent-purple);
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .odd-box:hover {
+        background-color: rgba(189, 147, 249, 0.2);
+        transform: translateY(-2px);
+    }
+    
+    .team-name {
+        margin-top: 5px;
+        font-size: 12px;
+        color: var(--text-primary);
+        text-align: center;
+    }
+    
+    .match-date {
+        color: var(--text-secondary);
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+    
+    .draw {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .empty-slip-message {
+        padding: 30px 15px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-style: italic;
+    }
+
+    .bet-alert {
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2000;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+        box-shadow: var(--shadow-dark);
+        max-width: 90%;
+        width: auto;
+    }
+
+    .minimize-btn {
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 5px;
+        transition: all 0.2s;
+    }
+    
+    .minimize-btn:hover {
+        color: var(--accent-cyan);
+    }
+    
+    /* Botão flutuante para exibir quando minimizado */
+    .floating-bet-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-dark);
+        cursor: move;
+        z-index: 1000;
+        user-select: none;
+        transition: transform 0.2s;
+    }
+    
+    .floating-bet-btn:hover {
+        transform: scale(1.1);
+    }
+    
+    .floating-bet-btn i {
+        color: var(--bg-primary);
+        font-size: 24px;
+    }
+    
+    .bet-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--accent-red);
+        color: white;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+        border: 2px solid var(--bg-primary);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="apostas-container">
+    <!-- Aposta em destaque -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h3>Promoção Especial</h3>
+            <a href="#" class="view-all">Ver Todas</a>
+        </div>
+        
+        <div class="odds-card">
+            <img src="https://via.placeholder.com/120x120" alt="Café com mascote" class="odds-image">
+            <div class="odds-content">
+                <h3 class="odds-title">Odds 2.5x para torra do café SÓ HOJE!!!</h3>
+                <p class="match-date">Publicado hoje</p>
+                <p>Sua café ou droga!!</p>
+                <p class="taxa-vitoria">100,0% Taxa de Vitória</p>
+                <a href="#" class="btn btn-sm">Ver Detalhes</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Categorias de Esportes -->
+    <div class="sports-category">
+        <h3 class="category-title">Esportes</h3>
+        <div class="sport-items">
+            <a href="{{ url_for('apostas') }}?categoria=futebol" class="sport-item">
+                <div class="sport-icon">
+                    <i class="fas fa-futbol" style="color: var(--accent-cyan);"></i>
+                </div>
+                <div class="sport-info">
+                    <h4>Futebol</h4>
+                    <p>Aposte no seu time preferido!</p>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </a>
+            
+            <a href="{{ url_for('apostas') }}?categoria=basquete" class="sport-item">
+                <div class="sport-icon">
+                    <i class="fas fa-basketball-ball" style="color: var(--accent-pink);"></i>
+                </div>
+                <div class="sport-info">
+                    <h4>Basquete</h4>
+                    <p>Aposte como 99 apostarias Lakers Mjorr</p>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </a>
+            
+            <a href="{{ url_for('apostas') }}?categoria=tenis" class="sport-item">
+                <div class="sport-icon">
+                    <i class="fas fa-table-tennis" style="color: var(--accent-green);"></i>
+                </div>
+                <div class="sport-info">
+                    <h4>Tênis</h4>
+                    <p>Grandes torneios e altas odds!</p>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </a>
+            
+            <a href="{{ url_for('apostas') }}?categoria=esports" class="sport-item">
+                <div class="sport-icon">
+                    <i class="fas fa-gamepad" style="color: var(--accent-yellow);"></i>
+                </div>
+                <div class="sport-info">
+                    <h4>E-Sports</h4>
+                    <p>CS, LoL, Valorant e mais!</p>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Jogos em Futebol (mostra apenas se categoria=futebol estiver na URL) -->
+    {% if request.args.get('categoria') == 'futebol' %}
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h3>Futebol</h3>
+            <a href="#" class="view-all">Ver Todos</a>
+        </div>
+        
+        <div class="odds-card">
+            <div class="odds-content">
+                <h3 class="odds-title">Cruzeiro x Santos</h3>
+                <p class="match-date">26/10/2023</p>
+                
+                <div class="odds-container">
+                    <div class="team-odds">
+                        <div class="odd-box" onclick="addToBetSlip('Cruzeiro x Santos', 'Cruzeiro', '1.82')">1.82</div>
+                        <div class="team-name">Cruzeiro</div>
+                    </div>
+                    
+                    <div class="draw">
+                        <div class="odd-box" onclick="addToBetSlip('Cruzeiro x Santos', 'Empate', '3')">3</div>
+                        <div class="team-name">Empate</div>
+                    </div>
+                    
+                    <div class="team-odds">
+                        <div class="odd-box" onclick="addToBetSlip('Cruzeiro x Santos', 'Santos', '4.5')">4.5</div>
+                        <div class="team-name">Santos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="odds-card">
+            <div class="odds-content">
+                <h3 class="odds-title">Flamengo x Palmeiras</h3>
+                <p class="match-date">28/10/2023</p>
+                
+                <div class="odds-container">
+                    <div class="team-odds">
+                        <div class="odd-box" onclick="addToBetSlip('Flamengo x Palmeiras', 'Flamengo', '2.10')">2.10</div>
+                        <div class="team-name">Flamengo</div>
+                    </div>
+                    
+                    <div class="draw">
+                        <div class="odd-box" onclick="addToBetSlip('Flamengo x Palmeiras', 'Empate', '3.25')">3.25</div>
+                        <div class="team-name">Empate</div>
+                    </div>
+                    
+                    <div class="team-odds">
+                        <div class="odd-box" onclick="addToBetSlip('Flamengo x Palmeiras', 'Palmeiras', '3.50')">3.50</div>
+                        <div class="team-name">Palmeiras</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Jogos em Basquete (mostra apenas se categoria=basquete estiver na URL) -->
+    {% if request.args.get('categoria') == 'basquete' %}
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h3>Basquete</h3>
+            <a href="#" class="view-all">Ver Todos</a>
+        </div>
+        
+        <div class="odds-card">
+            <div class="odds-content">
+                <h3 class="odds-title">Lakers x Celtics</h3>
+                <p class="match-date">30/10/2023</p>
+                
+                <div class="odds-container">
+                    <div class="team-odds">
+                        <div class="odd-box" onclick="addToBetSlip('Lakers x Celtics', 'Lakers', '1.75')">1.75</div>
+                        <div class="team-name">Lakers</div>
+                    </div>
+                    
+                    <div class="team-odds">
+                        <div class="odd-box" onclick="addToBetSlip('Lakers x Celtics', 'Celtics', '2.15')">2.15</div>
+                        <div class="team-name">Celtics</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Bet slip flutuante -->
+<div class="bet-slip" id="betSlip">
+    <div class="bet-slip-header">
+        <h4 class="bet-slip-title">TOTAL ODD: <span id="totalOdd">0</span></h4>
+        <div>
+            <button class="minimize-btn" onclick="minimizeBetSlip()"><i class="fas fa-minus"></i></button>
+            <button class="bet-item-remove" onclick="clearBetSlip()"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+    
+    <div class="bet-slip-body" id="betSlipItems">
+        <!-- Apostas serão adicionadas dinamicamente via JavaScript -->
+        <div id="emptySlipMessage" class="empty-slip-message">
+            Nenhuma aposta selecionada
+        </div>
+    </div>
+    
+    <div class="bet-slip-footer">
+        <div class="total-row">
+            <span id="totalAmount">0</span>
+        </div>
+        <button class="btn">Apostar</button>
+    </div>
+
+    
+</div>
+
+<div class="floating-bet-btn" id="floatingBetBtn">
+    <i class="fas fa-ticket-alt"></i>
+    <span class="bet-count" id="betCount">0</span>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function showErrorMessage(message) {
+        // Verifica se já existe uma mensagem de erro
+        const existingAlert = document.querySelector('.bet-alert');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+        
+        // Cria o elemento de alerta
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert bet-alert';
+        alertDiv.textContent = message;
+        
+        // Insere no topo da página de conteúdo
+        document.querySelector('.page-content').insertAdjacentElement('afterbegin', alertDiv);
+        
+        // Remove após 3 segundos
+        setTimeout(() => {
+            alertDiv.style.opacity = '0';
+            setTimeout(() => alertDiv.remove(), 300);
+        }, 3000);
+    }
+
+    // Função para adicionar aposta ao Bet Slip
+    function addToBetSlip(match, selection, odds) {
+        // Verifica se já existe uma aposta para este jogo
+        let savedBets = JSON.parse(localStorage.getItem('bagreBets') || '[]');
+        const existingMatchBet = savedBets.find(bet => bet.match === match);
+        
+        if (existingMatchBet) {
+            // Se já existe uma aposta para este jogo, mostra mensagem de erro estilizada
+            showErrorMessage(`Você já possui uma aposta em "${match}" (${existingMatchBet.selection}). Remova-a antes de fazer outra aposta neste jogo.`);
+            return; // Sai da função sem adicionar a nova aposta
+        }
+
+        const emptyMessage = document.getElementById('emptySlipMessage');
+        if (emptyMessage) {
+            emptyMessage.remove();
+        }
+        
+        const betSlipItems = document.getElementById('betSlipItems');
+        
+        const betItem = document.createElement('div');
+        betItem.className = 'bet-item';
+        betItem.innerHTML = `
+            <button class="bet-item-remove" onclick="removeBet(this)"><i class="fas fa-times"></i></button>
+            <div class="bet-item-info">
+                <h5 class="bet-item-title">${match}</h5>
+                <p class="bet-item-selection">${selection}</p>
+            </div>
+            <span class="bet-item-odd" data-odds="${odds}">${odds}x</span>
+        `;
+        
+        betSlipItems.appendChild(betItem);
+        
+        // Salvar no localStorage
+        const bet = { match, selection, odds };
+        saveBetToLocalStorage(bet);
+        
+        // Atualizar odd total
+        updateTotalOdd();
+
+        const betCount = document.getElementById('betCount');
+        const betItems = document.querySelectorAll('.bet-item');
+        betCount.textContent = betItems.length + 1; // +1 porque estamos adicionando uma nova
+    }
+    
+    // Função para salvar apostas no localStorage
+    function saveBetToLocalStorage(bet) {
+        let savedBets = JSON.parse(localStorage.getItem('bagreBets') || '[]');
+        
+        // Como já verificamos se existe aposta para o mesmo jogo na função addToBetSlip,
+        // aqui apenas adicionamos a nova aposta
+        savedBets.push(bet);
+        localStorage.setItem('bagreBets', JSON.stringify(savedBets));
+    }
+    
+    // Função para remover uma aposta específica
+    function removeBet(element) {
+        const betItem = element.parentElement;
+        const match = betItem.querySelector('.bet-item-title').innerText;
+        const selection = betItem.querySelector('.bet-item-selection').innerText;
+        
+        // Remove do DOM
+        betItem.remove();
+        
+        // Remove do localStorage
+        removeBetFromLocalStorage(match, selection);
+        
+        updateTotalOdd();
+        checkIfEmpty();
+        
+        const betCount = document.getElementById('betCount');
+        const betItems = document.querySelectorAll('.bet-item');
+        betCount.textContent = betItems.length - 1; // -1 porque estamos removendo uma
+    }
+    
+    // Função para remover apostas do localStorage
+    function removeBetFromLocalStorage(match, selection) {
+        let savedBets = JSON.parse(localStorage.getItem('bagreBets') || '[]');
+        savedBets = savedBets.filter(bet => !(bet.match === match && bet.selection === selection));
+        localStorage.setItem('bagreBets', JSON.stringify(savedBets));
+    }
+    
+    // Função para limpar bet slip
+    function clearBetSlip() {
+        document.getElementById('betSlipItems').innerHTML = '';
+        document.getElementById('totalOdd').innerText = '0';
+        document.getElementById('totalAmount').innerText = '0';
+        
+        // Limpa localStorage
+        localStorage.removeItem('bagreBets');
+        
+        // Adiciona mensagem de vazio
+        const betSlipItems = document.getElementById('betSlipItems');
+        betSlipItems.innerHTML = `
+            <div id="emptySlipMessage" class="empty-slip-message">
+                Nenhuma aposta selecionada
+            </div>
+        `;
+
+        const betCount = document.getElementById('betCount');
+        betCount.textContent = '0';
+    }
+    
+    // Função para carregar apostas do localStorage
+    function loadBetsFromLocalStorage() {
+        const savedBets = JSON.parse(localStorage.getItem('bagreBets') || '[]');
+        
+        if (savedBets.length > 0) {
+            // Remove mensagem de vazio se existir
+            const emptyMessage = document.getElementById('emptySlipMessage');
+            if (emptyMessage) {
+                emptyMessage.remove();
+            }
+            
+            // Adiciona cada aposta salva
+            const betSlipItems = document.getElementById('betSlipItems');
+            savedBets.forEach(bet => {
+                const betItem = document.createElement('div');
+                betItem.className = 'bet-item';
+                betItem.innerHTML = `
+                    <button class="bet-item-remove" onclick="removeBet(this)"><i class="fas fa-times"></i></button>
+                    <div class="bet-item-info">
+                        <h5 class="bet-item-title">${bet.match}</h5>
+                        <p class="bet-item-selection">${bet.selection}</p>
+                    </div>
+                    <span class="bet-item-odd" data-odds="${bet.odds}">${bet.odds}x</span>
+                `;
+                betSlipItems.appendChild(betItem);
+            });
+            
+            // Atualiza o total
+            updateTotalOdd();
+        }
+    }
+    
+    // Função para checar se o bet slip está vazio
+    function checkIfEmpty() {
+        const betItems = document.querySelectorAll('.bet-item');
+        if (betItems.length === 0) {
+            clearBetSlip();
+        }
+    }
+    
+    // Função para calcular odd total
+    function updateTotalOdd() {
+        const odds = document.querySelectorAll('.bet-item-odd');
+        let totalOdd = 1;
+        
+        // Se não há odds, retorna 0
+        if (odds.length === 0) {
+            document.getElementById('totalOdd').innerText = '0';
+            document.getElementById('totalAmount').innerText = '0';
+            return;
+        }
+        
+        // Multiplica todas as odds
+        odds.forEach(odd => {
+            const oddValue = parseFloat(odd.getAttribute('data-odds'));
+            totalOdd *= oddValue;
+        });
+        
+        // Atualiza o valor total da odd
+        document.getElementById('totalOdd').innerText = totalOdd.toFixed(2) + 'x';
+        
+        // Atualiza o valor total (apenas a multiplicação das odds)
+        document.getElementById('totalAmount').innerText = totalOdd.toFixed(2);
+    }
+    
+    // Inicializar bet slip vazio no carregamento
+    document.addEventListener('DOMContentLoaded', function() {
+        // Carrega apostas do localStorage se existirem
+        loadBetsFromLocalStorage();
+        
+        // Código original para scrollar à categoria selecionada
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoria = urlParams.get('categoria');
+        
+        if (categoria) {
+            document.querySelector('.page-content').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Inicializa a funcionalidade de arrastar
+        makeDraggable();
+        
+        // Adiciona evento de clique ao botão flutuante
+        document.getElementById('floatingBetBtn').addEventListener('click', maximizeBetSlip);
+        
+        // Atualiza o contador de apostas no botão flutuante
+        const betCount = document.getElementById('betCount');
+        const betItems = document.querySelectorAll('.bet-item');
+        betCount.textContent = betItems.length;
+    });
+
+    function minimizeBetSlip() {
+        const betSlip = document.getElementById('betSlip');
+        const floatingBtn = document.getElementById('floatingBetBtn');
+        const betCount = document.getElementById('betCount');
+        
+        // Atualiza contador de apostas
+        const betItems = document.querySelectorAll('.bet-item');
+        betCount.textContent = betItems.length;
+        
+        // Esconde bet slip e mostra botão flutuante
+        betSlip.style.display = 'none';
+        floatingBtn.style.display = 'flex';
+    }
+    
+    // Função para maximizar o bet slip
+    function maximizeBetSlip() {
+        const betSlip = document.getElementById('betSlip');
+        const floatingBtn = document.getElementById('floatingBetBtn');
+        
+        // Mostra bet slip e esconde botão flutuante
+        betSlip.style.display = 'block';
+        floatingBtn.style.display = 'none';
+    }
+    
+    // Função para tornar o botão arrastável
+    function makeDraggable() {
+        const floatingBtn = document.getElementById('floatingBetBtn');
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        
+        floatingBtn.addEventListener('mousedown', dragStart);
+        floatingBtn.addEventListener('touchstart', dragStart, { passive: false });
+        
+        function dragStart(e) {
+            e = e || window.event;
+            // Impedir clique normal ao iniciar arrasto
+            let startTime = new Date().getTime();
+            
+            // Impedir comportamento padrão para touch
+            if (e.type === 'touchstart') {
+                e.preventDefault();
+                pos3 = e.touches[0].clientX;
+                pos4 = e.touches[0].clientY;
+            } else {
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+            }
+            
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('touchend', dragEnd);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('touchmove', drag, { passive: false });
+            
+            function drag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                
+                // Calcula a nova posição
+                if (e.type === 'touchmove') {
+                    pos1 = pos3 - e.touches[0].clientX;
+                    pos2 = pos4 - e.touches[0].clientY;
+                    pos3 = e.touches[0].clientX;
+                    pos4 = e.touches[0].clientY;
+                } else {
+                    pos1 = pos3 - e.clientX;
+                    pos2 = pos4 - e.clientY;
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+                }
+                
+                // Define a nova posição do elemento
+                floatingBtn.style.top = (floatingBtn.offsetTop - pos2) + "px";
+                floatingBtn.style.left = (floatingBtn.offsetLeft - pos1) + "px";
+                floatingBtn.style.right = "auto";
+                floatingBtn.style.bottom = "auto";
+            }
+            
+            function dragEnd(e) {
+                // Se foi um clique rápido (não um arrasto), maximiza o bet slip
+                if (new Date().getTime() - startTime < 200) {
+                    maximizeBetSlip();
+                }
+                
+                document.removeEventListener('mouseup', dragEnd);
+                document.removeEventListener('touchend', dragEnd);
+                document.removeEventListener('mousemove', drag);
+                document.removeEventListener('touchmove', drag);
+            }
+        }
+    }
+</script>
+{% endblock %}

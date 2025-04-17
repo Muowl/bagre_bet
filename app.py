@@ -188,6 +188,15 @@ def blackjack():
         message=message
     )
 
+@app.route('/apostas')
+@login_required
+def apostas():
+    usuario = Usuario.query.get(session['usuario_id'])
+    return render_template('apostas.html', 
+                          active_page='apostas',
+                          current_user=usuario,
+                          request=request)
+
 # Rota para o painel de administração
 @app.route('/admin')
 @admin_required

@@ -30,6 +30,12 @@
                             <span>Cassino</span>
                         </a>
                     </li>
+                    <li class="{% if active_page == 'apostas' %}active{% endif %}">
+                        <a href="{{ url_for('apostas') }}">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>Apostas</span>
+                        </a>
+                    </li>
                     <li class="{% if active_page == 'free_coins' %}active{% endif %}">
                         <a href="{{ url_for('dashboard') }}">
                             <i class="fas fa-coins"></i>
