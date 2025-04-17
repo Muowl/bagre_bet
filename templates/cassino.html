@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Bagre Bet | Cassino{% endblock %}
+
+{% block page_title %}Cassino{% endblock %}
+
+{% block content %}
+<div class="casino-container">
+    <!-- Saldo do usuário -->
+    <div class="user-info">
+        <h3>Saldo: {{ current_user.saldo }} <i class="fas fa-coins" style="color: var(--accent-yellow);"></i></h3>
+    </div>
+
+    <!-- Jogos disponíveis -->
+    <div class="games-grid">
+        <div class="game-card">
+            <div class="game-image" style="background-color: rgba(189, 147, 249, 0.1);">
+                <i class="fas fa-dice" style="font-size: 2rem; color: var(--accent-purple);"></i>
+            </div>
+            <div class="game-info">
+                <h4>Roleta</h4>
+                <p>Gire a roleta e teste sua sorte!</p>
+            </div>
+            <a href="#" class="btn btn-sm">Jogar Agora</a>
+        </div>
+        <div class="game-card">
+            <div class="game-image" style="background-color: rgba(255, 121, 198, 0.1);">
+                <i class="fas fa-cards" style="font-size: 2rem; color: var(--accent-pink);"></i>
+            </div>
+            <div class="game-info">
+                <h4>Blackjack</h4>
+                <p>O clássico 21 com regras exclusivas!</p>
+            </div>
+            <a href="#" class="btn btn-sm">Jogar Agora</a>
+        </div>
+        <div class="game-card">
+            <div class="game-image" style="background-color: rgba(80, 250, 123, 0.1);">
+                <i class="fas fa-slot-machine" style="font-size: 2rem; color: var(--accent-green);"></i>
+            </div>
+            <div class="game-info">
+                <h4>Slots</h4>
+                <p>Ganhe rodadas grátis e bônus incríveis!</p>
+            </div>
+            <a href="#" class="btn btn-sm">Jogar Agora</a>
+        </div>
+        <div class="game-card">
+            <div class="game-image" style="background-color: rgba(241, 250, 140, 0.1);">
+                <i class="fas fa-dragon" style="font-size: 2rem; color: var(--accent-yellow);"></i>
+            </div>
+            <div class="game-info">
+                <h4>Dragão Dourado</h4>
+                <p>Descubra os tesouros escondidos!</p>
+            </div>
+            <a href="#" class="btn btn-sm">Jogar Agora</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

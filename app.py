@@ -133,6 +133,15 @@ def perfil():
                           active_page='perfil',
                           current_user=usuario)
 
+# Rota para o cassino 
+@app.route('/cassino')
+@login_required
+def cassino():
+    usuario = Usuario.query.get(session['usuario_id'])
+    return render_template('cassino.html', 
+                          active_page='cassino',
+                          current_user=usuario) 
+
 # Rota para o painel de administração
 @app.route('/admin')
 @admin_required
